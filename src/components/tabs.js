@@ -1,4 +1,4 @@
-const Tabs = (topics) => {
+  import axios from 'axios'
   // TASK 3
   // ---------------------
   // Implement this function which takes an array of strings ("topics") as its only argument.
@@ -13,9 +13,32 @@ const Tabs = (topics) => {
   //   <div class="tab">technology</div>
   // </div>
   //
-}
 
-const tabsAppender = (selector) => {
+  const Tabs = (array) => {
+    const tabTopics = document.createElement('div')
+    const tabOne = document.createElement('div')
+    // const tabTwo = document.createElement('div')
+    // const tabThree = document.createElement('div')
+
+    tabTopics.appendChild(tabOne)
+    // tabTopics.appendChild(tabTwo)
+    // tabTopics.appendChild(tabThree)
+
+    tabTopics.classList.add('topics')
+    tabOne.classList.add('tab')
+    // tabTwo.classList.add('tab')
+    // tabThree.classList.add('tab')
+
+
+    tabOne.textContent = `${array.topics}`;
+    //tabOne.textContent = array[0]
+    // tabTwo.textContent = array[1];
+    // tabThree.textContent = array[2];
+
+    return tabTopics;
+};
+
+
   // TASK 4
   // ---------------------
   // Implement this function which takes a css selector as its only argument.
@@ -23,6 +46,28 @@ const tabsAppender = (selector) => {
   // Find the array of topics inside the response, and create the tabs using the Tabs component.
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
+
+  const tabsList = (tabsTopics) => {
+    const section = document.createElement("div")
+    tabsTopics.forEach(elem => {
+      section.appendChild(Tabs(elem))
+    });
+    return section
+  }
+
+  const tabsAppender = (selector) => {
+    const tabsContainer = document.querySelector(selector)
+    axios.get('http://localhost:5000/api/topics')
+    .then(resp => {
+      console.log(resp.data.topics)
+      const tabsTopics = resp.data.topics
+      tabsList(tabsTopics);
+      tabsContainer.appendChild(tabsList(tabsTopics));
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
 }
 
 export { Tabs, tabsAppender }
