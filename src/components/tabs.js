@@ -15,27 +15,29 @@
   //
 
   const Tabs = (array) => {
-    const tabTopics = document.createElement('div')
-    const tabOne = document.createElement('div')
+    const topic = document.createElement('div')
+    const tab = document.createElement('div')
     // const tabTwo = document.createElement('div')
     // const tabThree = document.createElement('div')
 
-    tabTopics.appendChild(tabOne)
+    topic.appendChild(tab)
     // tabTopics.appendChild(tabTwo)
     // tabTopics.appendChild(tabThree)
 
-    tabTopics.classList.add('topics')
-    tabOne.classList.add('tab')
+    topic.classList.add('topics')
+    tab.classList.add('tab')
     // tabTwo.classList.add('tab')
     // tabThree.classList.add('tab')
 
 
-    tabOne.textContent = `${array.topics}`;
+    tab.textContent = `${array.topics}`;
+
     //tabOne.textContent = array[0]
     // tabTwo.textContent = array[1];
     // tabThree.textContent = array[2];
 
-    return tabTopics;
+
+    return topic;
 };
 
 
@@ -47,13 +49,13 @@
   // Append the tabs to the element in the DOM that matches the selector passed to the function.
   //
 
-  const tabsList = (tabsTopics) => {
-    const section = document.createElement("div")
-    tabsTopics.forEach(elem => {
-      section.appendChild(Tabs(elem))
-    });
-    return section
-  }
+  // const tabsList = (tab) => {
+  //   const section = document.createElement("div")
+  //   tab.forEach(elem => {
+  //     section.appendChild(Tabs(elem))
+  //   });
+  //   return section
+  // }
 
   const tabsAppender = (selector) => {
     const tabsContainer = document.querySelector(selector)
@@ -61,8 +63,9 @@
     .then(resp => {
       console.log(resp.data.topics)
       const tabsTopics = resp.data.topics
-      tabsList(tabsTopics);
-      tabsContainer.appendChild(tabsList(tabsTopics));
+      tabsTopics.forEach(elem => {
+        tabsContainer.appendChild(Tabs(elem));
+      })
     })
     .catch(err => {
       console.error(err)

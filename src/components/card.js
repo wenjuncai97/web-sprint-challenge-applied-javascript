@@ -1,3 +1,4 @@
+  import axios from 'axios'
   // TASK 5
   // ---------------------
   // Implement this function, which should return the markup you see below.
@@ -51,11 +52,31 @@
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
+  const cardList = (data) => {
+    const section = document.createElement('section')
+    data.forEach(card => {
+      section.appendChild(Card(data));
+    })
+    return section;
+  }
+
 const cardAppender = (selector) => {
   const cardContainer = document.querySelector(selector);
   axios.get('http://localhost:5000/api/articles')
   .then(resp => {
     console.log(resp.data.articles);
+    resp.data.articles.forEach(article => {
+      const articleObj = {
+        headline: article.headline,
+        authorPhoto: article.authorPhoto,
+        authorName: article.authorName
+      } 
+      const newArt = Card(articleObj);
+      cardContainer.appendChild(newArt);
+    })
+    // cardArray.forEach(elem => {
+    //   cardContainer.appendChild(Card(elem));
+    // })
   })
   .catch(err => {
     console.error(err);
