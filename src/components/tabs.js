@@ -15,28 +15,18 @@
   //
 
   const Tabs = (array) => {
-    const topic = document.createElement('div')
-    const tab = document.createElement('div')
-    // const tabTwo = document.createElement('div')
-    // const tabThree = document.createElement('div')
+    const topic = document.createElement('div');
+    topic.classList.add('topics');
 
-    topic.appendChild(tab)
-    // tabTopics.appendChild(tabTwo)
-    // tabTopics.appendChild(tabThree)
-
-    topic.classList.add('topics')
-    tab.classList.add('tab')
-    // tabTwo.classList.add('tab')
-    // tabThree.classList.add('tab')
-
-
-    tab.textContent = `${array.topics}`;
-
-    //tabOne.textContent = array[0]
-    // tabTwo.textContent = array[1];
-    // tabThree.textContent = array[2];
-
-
+    for(let i = 0; i < array.length; i++) {
+      // console.log(array[i]);
+      const arrayString = array[i];
+      const tab = document.createElement('div');
+      tab.classList.add('tab');
+      tab.textContent = arrayString;
+      topic.appendChild(tab);
+    }
+    // console.log(array);
     return topic;
 };
 
@@ -58,19 +48,17 @@
   // }
 
   const tabsAppender = (selector) => {
-    const tabsContainer = document.querySelector(selector)
+    const tabsContainer = document.querySelector(selector);
+    // console.log(selector);
     axios.get('http://localhost:5000/api/topics')
     .then(resp => {
-      console.log(resp.data.topics)
-      const tabsTopics = resp.data.topics
-      tabsTopics.forEach(elem => {
-        tabsContainer.appendChild(Tabs(elem));
-      })
+      // console.log(resp.data.topics);
+      const tabTopics = resp.data.topics;
+      tabsContainer.appendChild(Tabs(tabTopics));
     })
     .catch(err => {
-      console.error(err)
-    })
-
-}
+      console.error(err);
+    });
+};
 
 export { Tabs, tabsAppender }

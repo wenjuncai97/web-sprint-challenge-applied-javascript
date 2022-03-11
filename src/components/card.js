@@ -18,27 +18,27 @@
   // </div>
   //
   const Card = (article) => {
-    const newCard = document.createElement('div')
-    const headline = document.createElement('div')
-    const author = document.createElement('div')
-    const imgContainer = document.createElement('div')
-    const authorPhoto = document.createElement('img')
-    const authorName = document.createElement('span')
+    const newCard = document.createElement('div');
+    const headline = document.createElement('div');
+    const author = document.createElement('div');
+    const imgContainer = document.createElement('div');
+    const authorPhoto = document.createElement('img');
+    const authorName = document.createElement('span');
 
     newCard.appendChild(headline);
     newCard.appendChild(author);
     author.appendChild(imgContainer);
-    imgContainer.appendChild(authorPhoto)
-    authorPhoto.src = `${article.authorPhoto}`
-    author.appendChild(authorName)
+    imgContainer.appendChild(authorPhoto);
+    authorPhoto.src = `${article.authorPhoto}`;
+    author.appendChild(authorName);
 
-    headline.textContent = `${article.headline}`
-    authorName.textContent = `By ${article.authorName}`
+    headline.textContent = `${article.headline}`;
+    authorName.textContent = `By ${article.authorName}`;
 
-    newCard.classList.add('card')
-    headline.classList.add('headline')
-    author.classList.add('author')
-    imgContainer.classList.add('img-container')
+    newCard.classList.add('card');
+    headline.classList.add('headline');
+    author.classList.add('author');
+    imgContainer.classList.add('img-container');
 
     return newCard;
 }
@@ -52,35 +52,19 @@
   // Append each card to the element in the DOM that matches the selector passed to the function.
   //
 
-  const cardList = (data) => {
-    const section = document.createElement('section')
-    data.forEach(card => {
-      section.appendChild(Card(data));
-    })
-    return section;
-  }
-
 const cardAppender = (selector) => {
   const cardContainer = document.querySelector(selector);
   axios.get('http://localhost:5000/api/articles')
   .then(resp => {
-    console.log(resp.data.articles);
-    resp.data.articles.forEach(article => {
-      const articleObj = {
-        headline: article.headline,
-        authorPhoto: article.authorPhoto,
-        authorName: article.authorName
-      } 
-      const newArt = Card(articleObj);
-      cardContainer.appendChild(newArt);
-    })
-    // cardArray.forEach(elem => {
-    //   cardContainer.appendChild(Card(elem));
-    // })
-  })
-  .catch(err => {
-    console.error(err);
-  })
-}
+    const articles = resp.data.articles;
+    for (const key in articles) {
+      const articleList = articles[key];
+      articleList.forEach(article => {
+        const card = Card(article);
+        cardContainer.appendChild(card);
+      });
+    };
+    });
+};
 
 export { Card, cardAppender }

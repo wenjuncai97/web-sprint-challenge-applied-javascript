@@ -11,18 +11,18 @@
   //  </div>
   //
 const Header = (title, date, temp) => {
-  const headerDiv = document.createElement('div')
-  const headerDate = document.createElement('span')
-  const headerTitle = document.createElement('h1')
-  const headerTemp = document.createElement('span')
+  const headerDiv = document.createElement('div');
+  const headerDate = document.createElement('span');
+  const headerTitle = document.createElement('h1');
+  const headerTemp = document.createElement('span');
 
-  headerDiv.appendChild(headerDate)
-  headerDiv.appendChild(headerTitle)
-  headerDiv.appendChild(headerTemp)
+  headerDiv.appendChild(headerDate);
+  headerDiv.appendChild(headerTitle);
+  headerDiv.appendChild(headerTemp);
 
-  headerDiv.classList.add('header')
-  headerDate.classList.add('date')
-  headerTemp.classList.add('temp')
+  headerDiv.classList.add('header');
+  headerDate.classList.add('date');
+  headerTemp.classList.add('temp');
 
   headerDate.textContent = date;
   headerTitle.textContent = title;
@@ -37,8 +37,8 @@ const Header = (title, date, temp) => {
 // It should append the header to the element in the DOM that matches the given selector.
 //
 const headerAppender = (selector) => {
-  const headerContainer = document.querySelector(selector)
-  headerContainer.appendChild(Header( 'Lambda Times','January 6, 2021', '26°'))
+  const headerContainer = document.querySelector(selector);
+  headerContainer.appendChild(Header( 'Lambda Times','January 6, 2021', '26°'));
 }
 
 export { Header, headerAppender }
