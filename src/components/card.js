@@ -29,9 +29,9 @@
     newCard.appendChild(author);
     author.appendChild(imgContainer);
     imgContainer.appendChild(authorPhoto);
-    authorPhoto.src = `${article.authorPhoto}`;
     author.appendChild(authorName);
 
+    authorPhoto.src = `${article.authorPhoto}`;
     headline.textContent = `${article.headline}`;
     authorName.textContent = `By ${article.authorName}`;
 
@@ -40,8 +40,12 @@
     author.classList.add('author');
     imgContainer.classList.add('img-container');
 
+    newCard.addEventListener('click', evt => {
+      console.log(article.headline);
+    });
+
     return newCard;
-}
+};
 
   // TASK 6
   // ---------------------
@@ -56,6 +60,7 @@ const cardAppender = (selector) => {
   const cardContainer = document.querySelector(selector);
   axios.get('http://localhost:5000/api/articles')
   .then(resp => {
+    // console.log(resp.data.articles);
     const articles = resp.data.articles;
     for (const key in articles) {
       const articleList = articles[key];
@@ -64,6 +69,9 @@ const cardAppender = (selector) => {
         cardContainer.appendChild(card);
       });
     };
+    })
+    .catch(err => {
+      console.error(err);
     });
 };
 
